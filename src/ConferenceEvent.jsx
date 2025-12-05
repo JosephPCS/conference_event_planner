@@ -6,12 +6,12 @@ import { incrementQuantity, decrementQuantity } from "./venueSlice";
 const ConferenceEvent = () => {
     const [showItems, setShowItems] = useState(false);
     const [numberOfPeople, setNumberOfPeople] = useState(1);
-    const venueItems = useSelector((state) => state.venue);
-    const dispatch = useDispatch();
-    const remainingAuditoriumQuantity = 3 - venueItems.find(item => item.name === "Auditorium Hall (Capacity:200)").quantity;
+    const venueItems = useSelector((state) => state.venue); // refering to the state slice
+    const dispatch = useDispatch(); // made for dispatching objects to the reducers
+    const remainingAuditoriumQuantity = 3 - venueItems.find(item => item.name === "Auditorium Hall (Capacity:200)").quantity; //goes through venue items array to find the quantitiy of auditorium
 
     
-    const handleToggleItems = () => {
+    const handleToggleItems = () => { //updates the state that shows items
         console.log("handleToggleItems called");
         setShowItems(!showItems);
     };
