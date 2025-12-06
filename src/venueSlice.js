@@ -48,6 +48,7 @@ export const venueSlice = createSlice({
     },
     decrementQuantity: (state, action) => {
       const { payload: index } = action;
+      
       if (state[index] && state[index].quantity > 0) {
         state[index].quantity--;
       }
