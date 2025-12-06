@@ -31,9 +31,14 @@ const ConferenceEvent = () => {
         }
       };
     const handleIncrementAvQuantity = (index) => {
+        dispatch(incrementAvQuantity(index));
     };
 
     const handleDecrementAvQuantity = (index) => {
+        if(avItems[index].quantity > 0){
+            dispatch(decrementAvQuantity(index));
+        }
+        
     };
 
     const handleMealSelection = (index) => {
@@ -55,10 +60,13 @@ const ConferenceEvent = () => {
           venueItems.forEach((item) => {
             totalCost += item.cost * item.quantity;
           });
+        }else if(section ==="addons"){
+           totalCost = avItems.reduce((acc, item) => acc + item.price * item.quantity,0);
         }
         return totalCost;
       };
     const venueTotalCost = calculateTotalCost("venue");
+    const addonsTotalCost = calculateTotalCost("addons");
 
     const navigateToProducts = (idType) => {
         if (idType == '#venue' || idType == '#addons' || idType == '#meals') {
@@ -159,9 +167,28 @@ const ConferenceEvent = () => {
 
                                 </div>
                                 <div className="addons_selection">
+                                    {avItems.map((item,index) => (
+                                        <div className="av_data venue_main" key={index}>
+                                            <div className="img">
+                                                <img src={item.img} alt={item.name} />
+                                            </div>
+                                            <div className="text">
+                                                {item.name}
+                                            </div> 
+                                            <div>${item.price}</div>   
+                                        
+                                        <div className="addons_btn">
+
+                                            <button className="btn-warning" onClick={() =>handleDecrementAvQuantity(index)}> &ndash; </button>
+                                                <span className="quanity-value">{item.quantity}</span>
+                                                <button className="btn-success" onClick={()=>handleIncrementAvQuantity(index)}> &#43; </button>
+                                        </div>
+                                               
+                                        </div>
+                                    ))}
 
                                 </div>
-                                <div className="total_cost">Total Cost:</div>
+                                <div className="total_cost">Total Cost:{addonsTotalCost}</div>
 
                             </div>
 
